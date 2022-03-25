@@ -74,6 +74,16 @@ CREATE TABLE `orders` (
   `created_at` timestamp
 );
 
+CREATE TABLE `carts` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `customer_id` int
+);
+
+CREATE TABLE `cart_products` (
+  `cart_id` int,
+  `product_variant_id` int
+);
+
 CREATE TABLE `payments` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `payment_type` enum,
@@ -111,3 +121,9 @@ ALTER TABLE `orders` ADD FOREIGN KEY (`product_variant_id`) REFERENCES `product_
 ALTER TABLE `orders` ADD FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`);
 
 ALTER TABLE `orders` ADD FOREIGN KEY (`payment_id`) REFERENCES `payments` (`id`);
+
+ALTER TABLE `carts` ADD FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`);
+
+ALTER TABLE `cart_products` ADD FOREIGN KEY (`cart_id`) REFERENCES `carts` (`id`);
+
+ALTER TABLE `cart_products` ADD FOREIGN KEY (`product_variant_id`) REFERENCES `product_variants` (`id`);
