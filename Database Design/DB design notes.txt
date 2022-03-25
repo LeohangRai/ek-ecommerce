@@ -1,0 +1,12 @@
+# NOTE 1
+There are 3 types of users:
+- customers (who make orders, payments or add items to carts)
+- vendors (who add products and their variants)
+- admins (who create categories and brands data)
+
+# NOTE 2
+Unlik carts, the "orders" entity is for direct order of products.
+"carts" entity is for user carts.
+
+# NOTE 3
+Many to many relationship between carts and product_variants has been resolved with a "carts_products" pivot table.
