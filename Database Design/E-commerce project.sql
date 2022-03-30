@@ -5,8 +5,17 @@ CREATE TABLE `customers` (
   `addresss` varchar(255),
   `phone` integer,
   `email` varchar(255),
+  `profile_image` varchar(255),
+  `is_active` boolean,
   `created_at` timestamp,
   `updated_at` timestamp
+);
+
+CREATE TABLE `tokens` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `customer_id` user_id,
+  `expiry_date` datetime,
+  `created_at` timestamp
 );
 
 CREATE TABLE `favorites` (
@@ -126,6 +135,8 @@ CREATE TABLE `cms_users` (
   `created_at` timestamp,
   `updated_at` timestamp
 );
+
+ALTER TABLE `tokens` ADD FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`);
 
 ALTER TABLE `favorites` ADD FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`);
 
