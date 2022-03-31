@@ -1396,6 +1396,8 @@ h2.title {
 
 .content-404 img {
     margin: 0 auto;
+    width: 20%;
+    height: 20%;
 }
 
 .content-404 p {
@@ -1425,7 +1427,7 @@ h2.title {
 #form {
     display: block;
     margin-bottom: 185px;
-    margin-top: 185px;
+    margin-top: 18px;
     overflow: hidden;
 }
 
@@ -1437,9 +1439,10 @@ h2.title {
 .signup-form h2 {
     color: #696763;
     font-family: 'Roboto', sans-serif;
-    font-size: 20px;
+    font-size: 30px;
     font-weight: 300;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
+    text-align: center;
 }
 
 .login-form form input,

@@ -21,4 +21,14 @@
 import Route from '@ioc:Adonis/Core/Route'
 
 Route.get('/', 'HomeController.home')
+
+Route.group(() => {
+  Route.get('/login', 'UsersController.loginShow').as('loginShow')
+  Route.post('/login', 'UsersController.login').as('login')
+  Route.get('/register', 'UsersController.create').as('create')
+  Route.post('/register', 'UsersController.store').as('store')
+})
+  .prefix('users')
+  .as('users')
+
 Route.get('/*', 'HomeController.error404')
