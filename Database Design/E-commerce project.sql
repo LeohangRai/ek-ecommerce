@@ -1,24 +1,20 @@
 CREATE TABLE `customers` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `username` varchar(255),
-  `password` varchar(255),
+  `username` varchar(255) UNIQUE NOT NULL,
+  `password` varchar(255) NOT NULL,
   `addresss` varchar(255),
-  `phone` integer,
-  `email` varchar(255),
+  `phone` integer UNIQUE NOT NULL,
+  `email` varchar(255) UNIQUE NOT NULL,
   `profile_image` varchar(255),
-  `is_active` boolean,
+  `is_active` boolean DEFAULT false,
+  `token` varchar(255),
+  `token_expiry_date` datetime,
   `created_at` timestamp,
   `updated_at` timestamp
 );
 
-CREATE TABLE `tokens` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `customer_id` user_id,
-  `expiry_date` datetime,
-  `created_at` timestamp
-);
-
 CREATE TABLE `favorites` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
   `customer_id` int,
   `product_id` int
 );
@@ -27,12 +23,12 @@ CREATE TABLE `products` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `category_id` int,
   `brand_id` int,
-  `name` varchar(255),
-  `slug` varchar(255),
+  `name` varchar(255) NOT NULL,
+  `slug` varchar(255) UNIQUE NOT NULL,
   `description` text,
   `price` double,
   `discount_price` double,
-  `delivery` boolean,
+  `delivery` boolean DEFAULT false,
   `image` varchar(255),
   `status` boolean,
   `created_at` timestamp,
@@ -41,8 +37,8 @@ CREATE TABLE `products` (
 
 CREATE TABLE `categories` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `name` varchar(255),
-  `slug` varchar(255),
+  `name` varchar(255) UNIQUE NOT NULL,
+  `slug` varchar(255) UNIQUE NOT NULL,
   `status` boolean,
   `created_at` timestamp,
   `updated_at` timestamp
@@ -50,7 +46,8 @@ CREATE TABLE `categories` (
 
 CREATE TABLE `brands` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `name` varchar(255),
+  `name` varchar(255) UNIQUE NOT NULL,
+  `slug` varchar(255) UNIQUE NOT NULL,
   `products_count` int
 );
 
@@ -60,7 +57,7 @@ CREATE TABLE `orders` (
   `payment_id` int,
   `quantity` int,
   `order_number` int,
-  `status` boolean,
+  `order_status` ENUM ('PLACED', 'VERIFIED', 'SHIPPED', 'DELIVERED', 'CANCELED') DEFAULT "PLACED",
   `totalPrice` double,
   `created_at` timestamp
 );
@@ -68,6 +65,8 @@ CREATE TABLE `orders` (
 CREATE TABLE `order_items` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `order_id` int,
+  `product_name` varchar(255) NOT NULL,
+  `product_price` double NOT NULL,
   `product_id` int,
   `quantity` int
 );
@@ -82,32 +81,35 @@ CREATE TABLE `carts` (
 
 CREATE TABLE `cart_products` (
   `cart_id` int,
-  `product_id` int,
   `product_name` varchar(255),
-  `price` double
+  `product_price` double,
+  `quantity` int NOT NULL DEFAULT 1
 );
 
 CREATE TABLE `payments` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `transaction_id` int,
+  `customer_id` int,
+  `transaction_id` int UNIQUE,
   `payment_type` enum,
   `payment_gateway` enum,
+  `product_name` varchar(255),
+  `product_price` double,
   `total` double,
-  `status` boolean,
+  `payment_status` ENUM ('INITIATED', 'PENDING', 'COMPLETED', 'CANCELED') DEFAULT "INITIATED",
   `created_at` timestamp
 );
 
 CREATE TABLE `roles` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `name` varchar(255),
-  `slug` varchar(255),
+  `name` varchar(255) NOT NULL,
+  `slug` varchar(255) UNIQUE NOT NULL,
   `description` text
 );
 
 CREATE TABLE `permissions` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `name` varchar(255),
-  `slug` varchar(255),
+  `name` varchar(255) UNIQUE NOT NULL,
+  `slug` varchar(255) UNIQUE NOT NULL,
   `description` text
 );
 
@@ -119,8 +121,8 @@ CREATE TABLE `role_permission` (
 CREATE TABLE `admins` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `role_id` int,
-  `username` varchar(255),
-  `password` varchar(255),
+  `username` varchar(255) UNIQUE NOT NULL,
+  `password` varchar(255) NOT NULL,
   `status` boolean,
   `created_at` timestamp,
   `updated_at` timestamp
@@ -129,14 +131,16 @@ CREATE TABLE `admins` (
 CREATE TABLE `cms_users` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `role_id` int,
-  `username` varchar(255),
-  `password` varchar(255),
+  `username` varchar(255) UNIQUE NOT NULL,
+  `email` varchar(255) UNIQUE NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `address` varchar(255),
   `status` boolean,
+  `token` varchar(255),
+  `token_expiry_date` datetime,
   `created_at` timestamp,
   `updated_at` timestamp
 );
-
-ALTER TABLE `tokens` ADD FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`);
 
 ALTER TABLE `favorites` ADD FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`);
 
@@ -158,7 +162,7 @@ ALTER TABLE `carts` ADD FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`
 
 ALTER TABLE `cart_products` ADD FOREIGN KEY (`cart_id`) REFERENCES `carts` (`id`);
 
-ALTER TABLE `cart_products` ADD FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
+ALTER TABLE `payments` ADD FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`);
 
 ALTER TABLE `role_permission` ADD FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`);
 
