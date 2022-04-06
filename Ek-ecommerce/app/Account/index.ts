@@ -15,12 +15,12 @@ export const validationSchema = schema.create({
 })
 
 export const validationMessages = {
+  'password_confirmation.confirmed': "The passwords don't match",
   'required': 'The {{ field }} is required for creating a new account',
   'email.unique': 'Email already in use',
   'username.unique': 'The username is already in use',
   'phone.unique': 'The phone number is already in use',
   'password.minLength': 'The password must contain at least 8 characters.',
-  'password.passwordConfirmation': "The passwords don't match",
 }
 
 export const createUser = async (
