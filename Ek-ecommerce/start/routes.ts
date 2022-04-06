@@ -27,6 +27,7 @@ Route.group(() => {
   Route.post('/signup', 'AuthController.signup').as('signup')
   Route.get('/login', 'AuthController.loginShow').as('loginShow')
   Route.post('/login', 'AuthController.login').as('login')
+  Route.get('/logout', 'AuthController.logout').as('logout')
 })
   .prefix('auth')
   .as('auth')

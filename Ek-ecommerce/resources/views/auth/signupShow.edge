@@ -51,9 +51,9 @@
 						<div class="form-group">
 							<label for="password_confirmation">Confirm Password</label>
 							<input type="password" name="password_confirmation" placeholder="Confirm Password" required/>
-							@if(flashMessages.has('errors.password'))
+							@if(flashMessages.has('errors.password_confirmation') || flashMessages.has('errors.password'))
 							<p class="text-danger signupErrorMessages">
-								{{flashMessages.get('errors.password')}}
+								{{ flashMessages.get('errors.password_confirmation') || flashMessages.get('errors.password') }}
 							</p>
 							@endif
 						</div>

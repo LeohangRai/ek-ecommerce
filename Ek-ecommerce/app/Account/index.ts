@@ -10,9 +10,18 @@ export const validationSchema = schema.create({
     rules.email(),
     rules.unique({ table: 'users', column: 'email' }),
   ]),
-  password: schema.string({ trim: true }, [rules.confirmed()]),
+  password: schema.string({}, [rules.confirmed(), rules.minLength(8)]),
   phone: schema.string({}, [rules.unique({ table: 'users', column: 'phone' })]),
 })
+
+export const validationMessages = {
+  'required': 'The {{ field }} is required for creating a new account',
+  'email.unique': 'Email already in use',
+  'username.unique': 'The username is already in use',
+  'phone.unique': 'The phone number is already in use',
+  'password.minLength': 'The password must contain at least 8 characters.',
+  'password.passwordConfirmation': "The passwords don't match",
+}
 
 export const createUser = async (
   username: string,

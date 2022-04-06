@@ -1,28 +1,24 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import { createUser, validationSchema } from 'App/Account'
+import { createUser, validationMessages, validationSchema } from 'App/Account'
 
 export default class AuthController {
   public async signupShow({ view }: HttpContextContract) {
     return view.render('auth/signupShow', { title: 'Sign up' })
   }
 
-  public async signup({ request, response }: HttpContextContract) {
+  public async signup({ request, response, auth }: HttpContextContract) {
     const userDetails = await request.validate({
       schema: validationSchema,
-      messages: {
-        'required': 'The {{ field }} is required for creating a new account',
-        'email.unique': 'Email already in use',
-        'username.unique': 'The username is already in use',
-        'phone.unique': 'The phone number is already in use',
-        'password.confirmed': "The passwords don't match",
-      },
+      messages: validationMessages,
     })
-    await createUser(
+
+    const user = await createUser(
       userDetails.username,
       userDetails.email,
       userDetails.password,
       userDetails.phone
     )
+    await auth.login(user)
 
     return response.redirect('/')
   }
@@ -32,11 +28,11 @@ export default class AuthController {
   }
 
   public async login({ auth, request, response, session }: HttpContextContract) {
-    const email = request.input('email')
+    const uid = request.input('uid')
     const password = request.input('password')
 
     try {
-      await auth.use('web').attempt(email, password)
+      await auth.use('web').attempt(uid, password)
       response.redirect('/')
     } catch {
       session.flash('errors', 'Invalid credentials!')
@@ -44,7 +40,8 @@ export default class AuthController {
     }
   }
 
-  public signout({ response }: HttpContextContract) {
-    return response.redirect('/')
+  public async logout({ response, auth }: HttpContextContract) {
+    await auth.logout()
+    return response.redirect().toRoute('auth.login')
   }
 }
