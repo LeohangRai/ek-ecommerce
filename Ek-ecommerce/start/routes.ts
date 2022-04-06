@@ -23,12 +23,12 @@ import Route from '@ioc:Adonis/Core/Route'
 Route.get('/', 'HomeController.home')
 
 Route.group(() => {
-  Route.get('/login', 'UsersController.loginShow').as('loginShow')
-  Route.post('/login', 'UsersController.login').as('login')
-  Route.get('/register', 'UsersController.create').as('create')
-  Route.post('/register', 'UsersController.store').as('store')
+  Route.get('/signup', 'AuthController.signupShow').as('signupShow')
+  Route.post('/signup', 'AuthController.signup').as('signup')
+  Route.get('/login', 'AuthController.loginShow').as('loginShow')
+  Route.post('/login', 'AuthController.login').as('login')
 })
-  .prefix('users')
-  .as('users')
+  .prefix('auth')
+  .as('auth')
 
 Route.get('/*', 'HomeController.error404')

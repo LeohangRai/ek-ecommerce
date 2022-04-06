@@ -6,21 +6,42 @@
 			<div class="col-sm-4">
 				<!--sign up form-->
 				<div class="signup-form">
+					{{--  {{inspect(flashMessages.all())}}  --}}
 					<h2>User Registration</h2>
-					<form action="{{ route('users.store')}}" method="POST">
+					<form action="{{ route('auth.signup')}}" method="POST">
 						<div class="form-group">
 							<label for="username">Username</label>
 							<input type="text" name="username" placeholder="Name" required/>
+
+							@if(flashMessages.has('errors.username'))	
+							<p class="text-danger signupErrorMessages">
+							{{ flashMessages.get('errors.username') }}             
+							</p>					
+							@endif
 						</div>
+
 						<div class="form-group">
 							<label for="email">Email</label>
 							<input type="email" name="email" placeholder="Email Address" required/>
+
+							@if(flashMessages.has('errors.email'))	
+							<p class="text-danger signupErrorMessages">
+							{{ flashMessages.get('errors.email') }}             
+							</p>					
+							@endif
 						</div>
 
 						<div class="form-groupo">
 							<label for="phone">Phone Number</label>
 							<input type="tel" name="phone" placeholder="Phone number" required >
+
+							@if(flashMessages.has('errors.phone'))	
+							<p class="text-danger signupErrorMessages">
+							{{ flashMessages.get('errors.phone') }}             
+							</p>					
+							@endif
 						</div>
+						
 
 						<div class="form-group">
 							<label for="password">Password</label>
@@ -28,9 +49,15 @@
 						</div>
 
 						<div class="form-group">
-							<label for="password">Confirm Password</label>
-							<input type="password" name="confirm-password" placeholder="Confirm Password" required/>
+							<label for="password_confirmation">Confirm Password</label>
+							<input type="password" name="password_confirmation" placeholder="Confirm Password" required/>
+							@if(flashMessages.has('errors.password'))
+							<p class="text-danger signupErrorMessages">
+								{{flashMessages.get('errors.password')}}
+							</p>
+							@endif
 						</div>
+						
 
 						<button type="submit" class="btn btn-default">Signup</button>
 					</form>
@@ -38,7 +65,7 @@
 				<!--/sign up form-->
 				<div class="sign-up-here" style="margin-top:30px">
                     Already have an account?
-                    <a href="{{ route('users.loginShow') }}">
+                    <a href="{{ route('auth.login') }}">
                         Login here
                     </a>
                 </div>

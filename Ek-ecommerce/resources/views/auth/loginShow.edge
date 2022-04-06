@@ -6,7 +6,18 @@
             <!--login form-->
             <div class="col-md-4 login-form">
                 <h2>Login to your account</h2>
-                <form action="/">
+                @if(flashMessages.has('errors'))
+                <div class="alert alert-danger mt-2" role="alert" id="loginErrorDiv">
+                    <strong>
+                        {{ flashMessages.get('errors') }}
+                    </strong>
+                    <button type="button" class="close" data-dismis="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>                  
+                @endif
+
+                <form action="{{ route('auth.login')}}" method="POST">
                     <div class="form-group">
                         <label for="email">Email</label>
                         <input type="email" name="email" placeholder="Email Address" required />
@@ -19,13 +30,13 @@
                  
                     <span>
                         <input type="checkbox" class="checkbox"> 
-                        Keep me signed in
+                        Remember me
                     </span>
                     <button type="submit" class="btn btn-default">Login</button>
                 </form>
                 <div class="sign-up-here" style="margin-top:30px">
                     Don't have an account yet?
-                    <a href="{{ route('users.create') }}">
+                    <a href="{{ route('auth.signupShow') }}">
                         Sign up here
                     </a>
                 </div>
