@@ -1,0 +1,17 @@
+@if(flashMessages.has('success'))
+    <div class="alert alert-success alert-dismissible fade show mt-2 auto-hide message messages" role="alert" >
+        <strong>{{flashMessages.get('success')}}</strong>
+        <button type="button" class="close" data-dismis="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+@endif
+
+@if(flashMessages.has('error'))
+    <div class="alert alert-danger alert-dismissible fade show mt-2 auto-hide message messages" role="alert" >
+        <strong>{{flashMessages.get('errors')}}</strong>
+        <button type="button" class="close" data-dismis="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+@endif

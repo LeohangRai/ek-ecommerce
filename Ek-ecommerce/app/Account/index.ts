@@ -8,10 +8,11 @@ export const validationSchema = schema.create({
   ]),
   email: schema.string({ trim: true }, [
     rules.email(),
-    rules.unique({ table: 'users', column: 'email' }),
+    rules.unique({ table: 'users', column: 'email', caseInsensitive: true }),
   ]),
   password: schema.string({}, [rules.confirmed(), rules.minLength(8)]),
   phone: schema.string({}, [rules.unique({ table: 'users', column: 'phone' })]),
+  roleId: schema.number(),
 })
 
 export const validationMessages = {
@@ -27,12 +28,14 @@ export const createUser = async (
   username: string,
   email: string,
   password: string,
-  phone: string
+  phone: string,
+  role: number
 ) => {
   const user = new User()
   user.username = username
   user.email = email
   user.password = password
   user.phone = phone
+  user.roleId = role | 1
   return await user.save()
 }

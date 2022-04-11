@@ -15,11 +15,11 @@
                 <div class="col-sm-6">
                     <div class="social-icons pull-right">
                         <ul class="nav navbar-nav">
-                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                            <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-                            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                            <li><a href="#"><i class="fa-brands fa-facebook-f"></i></a></li>
+                            <li><a href="#"><i class="fa-brands fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fa-brands fa-linkedin"></i></a></li>
+                            <li><a href="#"><i class="fa-brands fa-youtube"></i></a></li>
+                            <li><a href="#"><i class="fa-brands fa-github"></i></a></li>
                         </ul>
                     </div>
                 </div>
@@ -56,7 +56,10 @@
                             @endif
 
                             @if(auth.user)
-                            <li><a href="{{ route('auth.logout') }}"><i class="fa fa-lock"></i> Logout</a></li>
+                                @can('DashboardPolicy.index')
+                                <li><a href="{{ route('dashboard.index') }}"><i class="fa fa-chart-line"></i>Dashboard</a></li>
+                                @endcan
+                                <li><a href="{{ route('auth.logout') }}"><i class="fa fa-lock"></i>Logout</a></li>    
                             @endif
                         </ul>
                     </div>

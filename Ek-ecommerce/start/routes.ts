@@ -32,4 +32,15 @@ Route.group(() => {
   .prefix('auth')
   .as('auth')
 
+Route.group(() => {
+  Route.get('/', 'DashboardController.index').as('index')
+  Route.group(() => {
+    Route.resource('users', 'UsersController').except(['show'])
+  })
+  Route.get('*', 'DashboardController.error404').as('error404')
+})
+  .prefix('dashboard')
+  .as('dashboard')
+  .namespace('App/Controllers/Http/Dashboard')
+
 Route.get('/*', 'HomeController.error404')
