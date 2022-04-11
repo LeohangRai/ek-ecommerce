@@ -6,8 +6,18 @@
 			<div class="col-sm-4">
 				<!--sign up form-->
 				<div class="signup-form">
-					{{inspect(flashMessages.all())}}
+					{{--  {{inspect(flashMessages.all())}}  --}}
 					<h2>User Registration</h2>
+					@if(flashMessages.has('error'))
+					<div class="alert alert-danger mt-2" role="alert" id="loginErrorDiv">
+						<strong>
+							{{ flashMessages.get('error') }}
+						</strong>
+						<button type="button" class="close" data-dismis="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>                  
+					@endif
 					<form action="{{ route('auth.signup')}}" method="POST">
 						{{ csrfField() }}
 						<div class="form-group">

@@ -44,4 +44,5 @@ Server.middleware.register([
 */
 Server.middleware.registerNamed({
   auth: 'App/Middleware/Auth',
+  throttle: 'Adonis/Addons/RequestThrottler/Middleware',
 })

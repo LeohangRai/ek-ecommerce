@@ -15,7 +15,7 @@
 
 import Logger from '@ioc:Adonis/Core/Logger'
 import HttpExceptionHandler from '@ioc:Adonis/Core/HttpExceptionHandler'
-
+import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 export default class ExceptionHandler extends HttpExceptionHandler {
   protected statusPages = {
     '403': 'errors/unauthorized',
@@ -25,5 +25,14 @@ export default class ExceptionHandler extends HttpExceptionHandler {
 
   constructor() {
     super(Logger)
+  }
+
+  public async handle(error, ctx: HttpContextContract) {
+    if (error.code === 'E_LIMIT_EXCEPTION') {
+      ctx.session.flash('error', error.message)
+      return ctx.response.redirect('back')
+    }
+
+    return super.handle(error, ctx)
   }
 }

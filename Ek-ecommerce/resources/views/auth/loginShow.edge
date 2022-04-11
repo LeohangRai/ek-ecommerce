@@ -6,10 +6,10 @@
             <!--login form-->
             <div class="col-md-4 login-form">
                 <h2>Login to your account</h2>
-                @if(flashMessages.has('errors'))
+                @if(flashMessages.has('error'))
                 <div class="alert alert-danger mt-2" role="alert" id="loginErrorDiv">
                     <strong>
-                        {{ flashMessages.get('errors') }}
+                        {{ flashMessages.get('error') }}
                     </strong>
                     <button type="button" class="close" data-dismis="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>

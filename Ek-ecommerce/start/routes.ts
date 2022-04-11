@@ -24,9 +24,9 @@ Route.get('/', 'HomeController.home')
 
 Route.group(() => {
   Route.get('/signup', 'AuthController.signupShow').as('signupShow')
-  Route.post('/signup', 'AuthController.signup').as('signup')
+  Route.post('/signup', 'AuthController.signup').as('signup').middleware('throttle')
   Route.get('/login', 'AuthController.loginShow').as('loginShow')
-  Route.post('/login', 'AuthController.login').as('login')
+  Route.post('/login', 'AuthController.login').as('login').middleware('throttle')
   Route.get('/logout', 'AuthController.logout').as('logout')
 })
   .prefix('auth')
