@@ -17,7 +17,7 @@ export default class AuthController {
       userDetails.email,
       userDetails.password,
       userDetails.phone,
-      userDetails.roleId | 1 //default roleId for normal USER
+      1 //default roleId for normal users
     )
     await auth.login(user)
 

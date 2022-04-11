@@ -6,9 +6,10 @@
 			<div class="col-sm-4">
 				<!--sign up form-->
 				<div class="signup-form">
-					{{--  {{inspect(flashMessages.all())}}  --}}
+					{{inspect(flashMessages.all())}}
 					<h2>User Registration</h2>
 					<form action="{{ route('auth.signup')}}" method="POST">
+						{{ csrfField() }}
 						<div class="form-group">
 							<label for="username">Username</label>
 							<input type="text" name="username" placeholder="Name" required/>

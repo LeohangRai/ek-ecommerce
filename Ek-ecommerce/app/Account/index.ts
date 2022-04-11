@@ -12,7 +12,6 @@ export const validationSchema = schema.create({
   ]),
   password: schema.string({}, [rules.confirmed(), rules.minLength(8)]),
   phone: schema.string({}, [rules.unique({ table: 'users', column: 'phone' })]),
-  roleId: schema.number(),
 })
 
 export const validationMessages = {
@@ -29,13 +28,13 @@ export const createUser = async (
   email: string,
   password: string,
   phone: string,
-  role: number
+  roleId: number
 ) => {
   const user = new User()
   user.username = username
   user.email = email
   user.password = password
   user.phone = phone
-  user.roleId = role | 1
+  user.roleId = roleId
   return await user.save()
 }
