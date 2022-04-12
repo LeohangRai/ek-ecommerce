@@ -4,20 +4,14 @@
     <section id="form">
 		<div class="container" style="display:flex; justify-content:center; align-items:center">
 			<div class="col-sm-4">
-				<!--sign up form-->
+				
 				<div class="signup-form">
-					{{--  {{inspect(flashMessages.all())}}  --}}
 					<h2>User Registration</h2>
-					@if(flashMessages.has('error'))
-					<div class="alert alert-danger mt-2" role="alert" id="loginErrorDiv">
-						<strong>
-							{{ flashMessages.get('error') }}
-						</strong>
-						<button type="button" class="close" data-dismis="alert" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>                  
-					@endif
+
+					{{--  showing error messages  --}}
+					@include('main/auth/_messages')
+
+					<!--sign up form-->
 					<form action="{{ route('auth.signup')}}" method="POST">
 						{{ csrfField() }}
 						<div class="form-group">
@@ -25,7 +19,7 @@
 							<input type="text" name="username" placeholder="Name" required/>
 
 							@if(flashMessages.has('errors.username'))	
-							<p class="text-danger signupErrorMessages">
+							<p class="text-danger input-field-messages">
 							{{ flashMessages.get('errors.username') }}             
 							</p>					
 							@endif
@@ -36,7 +30,7 @@
 							<input type="email" name="email" placeholder="Email Address" required/>
 
 							@if(flashMessages.has('errors.email'))	
-							<p class="text-danger signupErrorMessages">
+							<p class="text-danger input-field-messages">
 							{{ flashMessages.get('errors.email') }}             
 							</p>					
 							@endif
@@ -47,7 +41,7 @@
 							<input type="tel" name="phone" placeholder="Phone number" required >
 
 							@if(flashMessages.has('errors.phone'))	
-							<p class="text-danger signupErrorMessages">
+							<p class="text-danger input-field-messages">
 							{{ flashMessages.get('errors.phone') }}             
 							</p>					
 							@endif
@@ -63,7 +57,7 @@
 							<label for="password_confirmation">Confirm Password</label>
 							<input type="password" name="password_confirmation" placeholder="Confirm Password" required/>
 							@if(flashMessages.has('errors.password_confirmation') || flashMessages.has('errors.password'))
-							<p class="text-danger signupErrorMessages">
+							<p class="text-danger input-field-messages">
 								{{ flashMessages.get('errors.password_confirmation') || flashMessages.get('errors.password') }}
 							</p>
 							@endif
@@ -72,8 +66,9 @@
 
 						<button type="submit" class="btn btn-default">Signup</button>
 					</form>
+					<!--/sign up form-->
 				</div>
-				<!--/sign up form-->
+				
 				<div class="sign-up-here" style="margin-top:30px">
                     Already have an account?
                     <a href="{{ route('auth.login') }}">

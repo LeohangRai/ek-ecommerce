@@ -29,7 +29,7 @@ export default class ExceptionHandler extends HttpExceptionHandler {
 
   public async handle(error, ctx: HttpContextContract) {
     if (error.code === 'E_LIMIT_EXCEPTION') {
-      ctx.session.flash('error', error.message)
+      ctx.session.flash('errors_rate_limit', error.message)
       return ctx.response.redirect('back')
     }
 

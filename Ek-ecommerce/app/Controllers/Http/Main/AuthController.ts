@@ -7,14 +7,35 @@ export default class AuthController {
     return view.render('main/auth/signupShow', { title: 'Sign up' })
   }
 
-  public async signup({ request, response, auth }: HttpContextContract) {
+  public async signup({ request, response, auth, session }: HttpContextContract) {
+    // checking the DB connection and blocking the request.validate() code execution if there is a DB connection error
+    try {
+      await User.findOrFail(1)
+    } catch (e) {
+      // DB connection error
+      if (e.code === 'ECONNREFUSED') {
+        session.flash('errors_others', 'Database connection failed')
+      }
+      return response.redirect('back')
+    }
+
     const payload = await request.validate(SignupValidator)
 
-    // roleId:1 because that's the default roleId for new users that signup
-    const user = await User.create({ ...payload, roleId: 1 })
-    await auth.login(user)
+    try {
+      // roleId:1 because that's the default roleId for new users that signup from main ecommerce site
+      const user = await User.create({ ...payload, roleId: 1 })
+      await auth.login(user)
 
-    return response.redirect('/')
+      return response.redirect('/')
+    } catch (e) {
+      // DB connection error
+      if (e.code === 'ECONNREFUSED') {
+        session.flash('errors_others', 'Database connection failed')
+      } else {
+        session.flash('errors_others', e.message)
+      }
+      return response.redirect('back')
+    }
   }
 
   public loginShow({ view }: HttpContextContract) {
@@ -27,15 +48,28 @@ export default class AuthController {
 
     try {
       await auth.use('web').attempt(uid, password)
-      response.redirect('/')
-    } catch {
-      session.flash('errors', 'Invalid credentials!')
-      response.redirect('back')
+      return response.redirect('/')
+    } catch (e) {
+      if (e.code === 'E_INVALID_AUTH_UID' || e.code === 'E_INVALID_AUTH_PASSWORD') {
+        session.flash('errors_invalid_credentials', 'Invalid username or password')
+      }
+      // DB connection error
+      else if (e.code === 'ECONNREFUSED') {
+        session.flash('errors_others', 'Database connection failed')
+      } else {
+        session.flash('errors_others', e.message)
+      }
+      return response.redirect('back')
     }
   }
 
-  public async logout({ response, auth }: HttpContextContract) {
-    await auth.logout()
-    return response.redirect().toRoute('auth.login')
+  public async logout({ response, auth, session }: HttpContextContract) {
+    try {
+      await auth.logout()
+      return response.redirect().toRoute('auth.login')
+    } catch (e) {
+      session.flash('errors_others', e.message)
+      return response.redirect('back')
+    }
   }
 }

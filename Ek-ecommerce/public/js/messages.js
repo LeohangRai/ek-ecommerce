@@ -6,5 +6,10 @@ $(document).ready(function () {
 
   setTimeout(() => {
     $('.messages').hide()
-  }, 4000)
+  }, 6000)
+
+  //error messages on form input fields
+  setTimeout(() => {
+    $('.input-field-messages').hide()
+  }, 6000)
 })

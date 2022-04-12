@@ -10,7 +10,7 @@
                     <label for="username">Username</label>
                     <input type="text" name="username" id="username" class="form-control" placeholder="Enter the username" required>
                     @if(flashMessages.has('errors.username'))	
-                        <p class="text-danger signupErrorMessages">
+                        <p class="text-danger input-field-messages">
                         {{ flashMessages.get('errors.username') }}             
                         </p>					
                     @endif
@@ -20,7 +20,7 @@
                     <label for="email">Email</label>
                     <input type="email" name="email" id="email" class="form-control" placeholder="Enter the email" required>
                     @if(flashMessages.has('errors.email'))	
-                        <p class="text-danger signupErrorMessages">
+                        <p class="text-danger input-field-messages">
                         {{ flashMessages.get('errors.email') }}             
                         </p>					
                     @endif
@@ -30,7 +30,7 @@
                     <label for="phone">Phone</label>
                     <input type="number" name="phone" id="phone" class="form-control" placeholder="Enter phone number" required>
                     @if(flashMessages.has('errors.phone'))	
-                        <p class="text-danger signupErrorMessages">
+                        <p class="text-danger input-field-messages">
                         {{ flashMessages.get('errors.phone') }}             
                         </p>					
                     @endif
@@ -40,7 +40,7 @@
                     <label for="password">Password</label>
                     <input type="password" name="password" id="password" class="form-control" placeholder="Enter the password" required>
                     @if(flashMessages.has('errors.password'))	
-                        <p class="text-danger signupErrorMessages">
+                        <p class="text-danger input-field-messages">
                         {{ flashMessages.get('errors.password') }}             
                         </p>					
                     @endif

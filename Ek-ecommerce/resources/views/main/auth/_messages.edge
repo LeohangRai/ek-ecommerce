@@ -1,0 +1,39 @@
+{{--  {{inspect(flashMessages.all())}}  --}}
+
+
+{{--  for rate limit exceeded  --}}
+@if(flashMessages.has('errors_rate_limit'))
+<div class="alert alert-danger mt-2 messages" role="alert">
+    <strong>
+        {{ flashMessages.get('errors_rate_limit') }}
+    </strong>
+    <button type="button" class="close" data-dismis="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>                  
+@endif
+
+{{--  for invalid credentials  --}}
+@if(flashMessages.has('errors_invalid_credentials'))
+<div class="alert alert-danger mt-2 messages" role="alert">
+    <strong>
+        {{ flashMessages.get('errors_invalid_credentials') }}
+    </strong>
+    <button type="button" class="close" data-dismis="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>                  
+@endif
+
+{{--  for other errors like database connections  --}}
+@if(flashMessages.has('errors_others'))
+<div class="alert alert-danger mt-2 messages" role="alert">
+    <strong>
+        {{ flashMessages.get('errors_others') }}
+    </strong>
+    <button type="button" class="close" data-dismis="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>                  
+@endif
+
