@@ -1,5 +1,6 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import { createUser, validationMessages, validationSchema } from 'App/Account'
+import User from 'App/Models/User'
+import SignupValidator from 'App/Validators/SignupValidator'
 
 export default class AuthController {
   public async signupShow({ view }: HttpContextContract) {
@@ -7,18 +8,10 @@ export default class AuthController {
   }
 
   public async signup({ request, response, auth }: HttpContextContract) {
-    const userDetails = await request.validate({
-      schema: validationSchema,
-      messages: validationMessages,
-    })
+    const payload = await request.validate(SignupValidator)
 
-    const user = await createUser(
-      userDetails.username,
-      userDetails.email,
-      userDetails.password,
-      userDetails.phone,
-      1 //default roleId for normal users
-    )
+    // roleId:1 because that's the default roleId for new users that signup
+    const user = await User.create({ ...payload, roleId: 1 })
     await auth.login(user)
 
     return response.redirect('/')

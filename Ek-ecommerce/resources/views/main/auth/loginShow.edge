@@ -17,6 +17,17 @@
                 </div>                  
                 @endif
 
+                @if(flashMessages.has('errors'))
+                <div class="alert alert-danger mt-2" role="alert" id="loginErrorDiv">
+                    <strong>
+                        {{ flashMessages.get('errors') }}
+                    </strong>
+                    <button type="button" class="close" data-dismis="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>                  
+                @endif
+                
                 <form action="{{ route('auth.login')}}" method="POST">
                     {{ csrfField() }}
                     <div class="form-group">

@@ -1,6 +1,10 @@
 @layout('layouts/dashboard/index')
 
 @section('content')
+<div class="row-md-6 d-flex justify-content-left my-4">
+    <a href="{{ route('dashboard.users.create') }}" class="btn btn-md btn-outline-success">Create new user</a>
+</div>
+
 <div class="row-md-8">
     <table class="table table-bordered">
         <thead class="bg-dark text-center">
@@ -33,10 +37,6 @@
             @endeach
         </tbody>
         </table>
-</div>
-
-<div class="row-md-6 d-flex justify-content-center mt-4">
-    <a href="{{ route('dashboard.users.create') }}" class="btn btn-md btn-success">Create new user</a>
 </div>
  
  
