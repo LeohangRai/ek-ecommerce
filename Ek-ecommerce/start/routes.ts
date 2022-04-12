@@ -31,6 +31,7 @@ Route.group(() => {
 })
   .prefix('auth')
   .as('auth')
+  .namespace('App/Controllers/Http/Main')
 
 Route.group(() => {
   Route.get('/', 'DashboardController.index').as('index')

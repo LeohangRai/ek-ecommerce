@@ -3,7 +3,7 @@ import { createUser, validationMessages, validationSchema } from 'App/Account'
 
 export default class AuthController {
   public async signupShow({ view }: HttpContextContract) {
-    return view.render('auth/signupShow', { title: 'Sign up' })
+    return view.render('main/auth/signupShow', { title: 'Sign up' })
   }
 
   public async signup({ request, response, auth }: HttpContextContract) {
@@ -25,7 +25,7 @@ export default class AuthController {
   }
 
   public loginShow({ view }: HttpContextContract) {
-    return view.render('auth/loginShow', { title: 'Login' })
+    return view.render('main/auth/loginShow', { title: 'Login' })
   }
 
   public async login({ auth, request, response, session }: HttpContextContract) {
