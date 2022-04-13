@@ -27,6 +27,7 @@
     "@adonisjs/bouncer": "^2.2.7",
     "@adonisjs/core": "^5.5.3",
     "@adonisjs/lucid": "^10.0.0",
+    "@adonisjs/lucid-slugify": "^2.1.5",
     "@adonisjs/redis": "^7.2.0",
     "@adonisjs/repl": "^3.1.9",
     "@adonisjs/session": "^4.0.6",
