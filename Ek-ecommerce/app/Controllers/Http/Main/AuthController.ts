@@ -5,14 +5,12 @@ import SignupValidator from 'App/Validators/SignupValidator'
 export default class AuthController {
   public async signupShow({ view, auth }: HttpContextContract) {
     if (auth.isLoggedIn) {
-      return `<h3>You are already logged in as ${auth.user?.username}</h3>
-      Go back <a href = "/">home</a>
-      `
+      return view.render('errors/already-logged-in')
     }
     return view.render('main/auth/signupShow', { title: 'Sign up' })
   }
 
-  public async signup({ request, response, auth, session }: HttpContextContract) {
+  public async signup({ request, response, auth, session, view }: HttpContextContract) {
     // checking the DB connection and blocking the request.validate() code execution if there is a DB connection error
     try {
       await User.findOrFail(1)
@@ -22,6 +20,10 @@ export default class AuthController {
         session.flash('errors_others', 'Database connection failed')
       }
       return response.redirect('back')
+    }
+
+    if (auth.isLoggedIn) {
+      return view.render('errors/already-logged-in')
     }
 
     const payload = await request.validate(SignupValidator)
@@ -45,18 +47,14 @@ export default class AuthController {
 
   public loginShow({ view, auth }: HttpContextContract) {
     if (auth.isLoggedIn) {
-      return `<h3>You are already logged in as ${auth.user?.username}</h3>
-      Go back <a href = "/">home</a>
-      `
+      return view.render('errors/already-logged-in')
     }
     return view.render('main/auth/loginShow', { title: 'Login' })
   }
 
-  public async login({ auth, request, response, session }: HttpContextContract) {
+  public async login({ auth, request, response, session, view }: HttpContextContract) {
     if (auth.isLoggedIn) {
-      return `<h3>You are already logged in as ${auth.user?.username}</h3>
-      Go back <a href = "/">home</a>
-      `
+      return view.render('errors/already-logged-in')
     }
     const uid = request.input('uid')
     const password = request.input('password')
