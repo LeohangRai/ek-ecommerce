@@ -33,6 +33,9 @@ export default class ExceptionHandler extends HttpExceptionHandler {
       return ctx.response.redirect('back')
     }
 
+    if (error.code === 'E_AUTHORIZATION_FAILURE') {
+      return ctx.view.render('errors/403/index')
+    }
     return super.handle(error, ctx)
   }
 }
