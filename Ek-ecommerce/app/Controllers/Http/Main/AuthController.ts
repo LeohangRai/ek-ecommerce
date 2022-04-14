@@ -3,7 +3,12 @@ import User from 'App/Models/User'
 import SignupValidator from 'App/Validators/SignupValidator'
 
 export default class AuthController {
-  public async signupShow({ view }: HttpContextContract) {
+  public async signupShow({ view, auth }: HttpContextContract) {
+    if (auth.isLoggedIn) {
+      return `<h3>You are already logged in as ${auth.user?.username}</h3>
+      Go back <a href = "/">home</a>
+      `
+    }
     return view.render('main/auth/signupShow', { title: 'Sign up' })
   }
 
@@ -38,11 +43,21 @@ export default class AuthController {
     }
   }
 
-  public loginShow({ view }: HttpContextContract) {
+  public loginShow({ view, auth }: HttpContextContract) {
+    if (auth.isLoggedIn) {
+      return `<h3>You are already logged in as ${auth.user?.username}</h3>
+      Go back <a href = "/">home</a>
+      `
+    }
     return view.render('main/auth/loginShow', { title: 'Login' })
   }
 
   public async login({ auth, request, response, session }: HttpContextContract) {
+    if (auth.isLoggedIn) {
+      return `<h3>You are already logged in as ${auth.user?.username}</h3>
+      Go back <a href = "/">home</a>
+      `
+    }
     const uid = request.input('uid')
     const password = request.input('password')
 
