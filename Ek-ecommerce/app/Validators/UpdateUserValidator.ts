@@ -45,7 +45,7 @@ export default class UpdateUserValidator {
       rules.unique({ table: 'users', column: 'phone', whereNot: { id: this.ctx.params.id } }),
     ]),
 
-    role_id: schema.number(),
+    roleId: schema.number(),
   })
 
   /**

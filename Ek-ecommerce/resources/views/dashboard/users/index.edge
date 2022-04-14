@@ -25,7 +25,7 @@
                 </td>
                 <td>{{user.email}}</td>
                 <td>{{user.phone}}</td>
-                <td>{{Role[user.roleId]}}</td>
+                <td>{{user.role.name}}</td>
                 <td class="d-flex">
                     <a href="{{ route('dashboard.users.edit', { id: user.id }) }}" class="btn btn-sm btn-warning">Edit</a>
                     <form action="{{ route('dashboard.users.destroy', { id: user.id }, { qs: { _method: 'DELETE' }}) }}" method="post">

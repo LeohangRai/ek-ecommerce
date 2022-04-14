@@ -1,6 +1,6 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import User from 'App/Models/User'
-import Role from 'Contracts/enums/Role'
+import Role from 'App/Models/Role'
 import CreateUserValidator from 'App/Validators/CreateUserValidator'
 import UpdateUserValidator from 'App/Validators/UpdateUserValidator'
 
@@ -8,19 +8,14 @@ export default class UsersController {
   public async index({ view, bouncer }: HttpContextContract) {
     await bouncer.with('UserPolicy').authorize('viewList')
 
-    const users = await User.all()
-    return view.render('dashboard/users/index', { title: 'Users', users, Role })
+    const users = await User.query().preload('role')
+    return view.render('dashboard/users/index', { title: 'Users', users })
   }
 
   public async create({ view, bouncer }: HttpContextContract) {
     await bouncer.with('UserPolicy').authorize('create')
 
-    let roles = {} as any
-    for (let [key, value] of Object.entries(Role)) {
-      if (typeof value === 'number') {
-        roles[key] = { key: key, value: value }
-      }
-    }
+    const roles = await Role.all()
     return view.render('dashboard/users/create', { roles, title: 'Create user' })
   }
 
@@ -44,12 +39,7 @@ export default class UsersController {
   public async edit({ view, params, bouncer }: HttpContextContract) {
     await bouncer.with('UserPolicy').authorize('update')
     const user = await User.findOrFail(params.id)
-    let roles = {} as any
-    for (let [key, value] of Object.entries(Role)) {
-      if (typeof value === 'number') {
-        roles[key] = { key: key, value: value }
-      }
-    }
+    const roles = await Role.all()
 
     return view.render('dashboard/users/edit', { title: `Edit user ${user.username}`, user, roles })
   }
