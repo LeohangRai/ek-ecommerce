@@ -38,6 +38,9 @@ Route.group(() => {
   Route.group(() => {
     Route.resource('users', 'UsersController').except(['show'])
   })
+  Route.group(() => {
+    Route.resource('roles', 'RolesController').except(['show'])
+  })
   Route.get('*', 'DashboardController.error404').as('error404')
 })
   .prefix('dashboard')

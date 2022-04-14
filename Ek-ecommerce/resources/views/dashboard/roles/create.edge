@@ -1,0 +1,40 @@
+@layout('layouts/dashboard/index')
+
+@section('content')
+<div class="container">
+    <div class="row p-4">
+        <div class="col-md-10">
+            <form action="{{ route('dashboard.roles.store') }}" method="post">
+                {{ csrfField() }}
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" name="name" id="name" class="form-control" placeholder="Enter the name" required>
+                    @if(flashMessages.has('errors.name'))	
+                        <p class="text-danger input-field-messages">
+                        {{ flashMessages.get('errors.name') }}             
+                        </p>					
+                    @endif
+                </div>
+
+                <div class="form-group">
+                    <label for="permissions">Permissions</label>
+                    <input type="text" name="permissions" id="permissions" class="form-control" placeholder="Enter the permissions" required>
+                    @if(flashMessages.has('errors.permissions'))	
+                        <p class="text-danger input-field-messages">
+                        {{ flashMessages.get('errors.permissions') }}             
+                        </p>					
+                    @endif
+                </div>           
+
+                <button class="btn btn-outline-success btn-sm" type="submit">
+                    Create Role
+                </button>
+
+            </form>
+        </div>
+
+    </div>
+
+</div>
+
+@endsection

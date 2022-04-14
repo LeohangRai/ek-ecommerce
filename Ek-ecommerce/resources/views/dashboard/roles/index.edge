@@ -1,0 +1,63 @@
+@layout('layouts/dashboard/index')
+
+@section('content')
+<div class="row-md-6 d-flex justify-content-left my-4">
+    <a href="{{ route('dashboard.roles.create') }}" class="btn btn-md btn-outline-success">Create new role</a>
+</div>
+
+<div class="row-md-8">
+    <table class="table table-bordered">
+        <thead class="bg-dark text-center">
+            <tr class="text-white">
+                <th>Name</th>
+                <th>Slug</th>
+                <th>Permissions</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody class="text-center">
+            @each(role in roles)
+            <tr>
+                <td >
+                    {{role.name}}
+                </td>
+                <td>{{role.slug}}</td>
+                <td>{{role.permissions}}</td>
+                <td class="d-flex">
+                    <a href="{{ route('dashboard.roles.edit', { id: role.id }) }}" class="btn btn-sm btn-warning">Edit</a>
+                    <form action="{{ route('dashboard.roles.destroy', { id: role.id }, { qs: { _method: 'DELETE' }}) }}" method="post">
+                        {{ csrfField() }}
+                        <button type="submit" class="btn btn-sm btn-danger ml-2">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            @endeach
+        </tbody>
+        </table>
+</div>
+ 
+ 
+ <!-- Delete User Modal-->
+<div class="modal fade" id="deleteUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Are you sure you want to delete this user?</div>
+            <div class="modal-footer">
+                {{--  <form action="{{ route('dashboard.users.destroy', { id: user.id }, { qs: { _method: 'DELETE' }}) }}" method="post">
+                    <button type="submit" class="btn btn-danger" data-dismiss="modal">Delete</button>
+                </form>  --}}
+            </div>
+        </div>
+    </div>
+</div>
+ 
+ @endsection
+   
+ 
