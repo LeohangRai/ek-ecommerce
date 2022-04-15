@@ -22,7 +22,7 @@ export default class User extends BaseModel {
   @column()
   public rememberMeToken?: string
 
-  @column()
+  @column({ serializeAs: null })
   public passwordResetToken?: string
 
   @column.dateTime({ autoCreate: true })

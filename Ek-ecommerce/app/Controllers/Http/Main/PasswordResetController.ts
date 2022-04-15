@@ -61,17 +61,22 @@ export default class PasswordResetController {
 
   public async resetPassword({ request, response, params, session }: HttpContextContract) {
     const payload = await request.validate(ResetPasswordValidator)
-    const user = await User.findByOrFail('email', params.email)
 
-    //passwordRestToken comes from a hidden input field
-    if (request.input('passwordResetToken') === user.passwordResetToken) {
-      user.password = payload.password
-      user.passwordResetToken = ''
-      await user.save()
-      session.flash('success', 'Your password has been updated successfully')
-      return response.redirect().toRoute('auth.loginShow')
-    } else {
-      session.flash('errors_others', 'Invalid reset token')
+    try {
+      const user = await User.findByOrFail('email', params.email)
+      //passwordRestToken comes from a hidden input field
+      if (request.input('passwordResetToken') === user.passwordResetToken) {
+        user.password = payload.password
+        user.passwordResetToken = ''
+        await user.save()
+        session.flash('success', 'Your password has been updated successfully')
+        return response.redirect().toRoute('auth.loginShow')
+      } else {
+        session.flash('errors_others', 'Invalid reset token')
+        return response.redirect('back')
+      }
+    } catch (e) {
+      session.flash('error_others', e.message)
       return response.redirect('back')
     }
   }
