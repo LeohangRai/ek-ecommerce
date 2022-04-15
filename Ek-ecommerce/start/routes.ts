@@ -39,7 +39,7 @@ Route.group(() => {
   Route.get('/reset-password/:email', 'PasswordResetController.resetPasswordShow').as(
     'resetPasswordShow'
   )
-  Route.post('/reset-password/:email', 'PasswordResetController.resetPassword')
+  Route.put('/reset-password/:email', 'PasswordResetController.resetPassword')
     .as('resetPassword')
     .middleware('throttle')
 })
