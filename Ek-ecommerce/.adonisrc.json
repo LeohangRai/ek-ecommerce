@@ -5,7 +5,8 @@
     "@adonisjs/core/build/commands/index.js",
     "@adonisjs/repl/build/commands",
     "@adonisjs/lucid/build/commands",
-    "@adonisjs/bouncer/build/commands"
+    "@adonisjs/bouncer/build/commands",
+    "@adonisjs/mail/build/commands"
   ],
   "exceptionHandlerNamespace": "App/Exceptions/Handler",
   "aliases": {
@@ -30,7 +31,8 @@
     "@adonisjs/bouncer",
     "@adonisjs/redis",
     "adonis-request-throttler",
-    "@adonisjs/lucid-slugify"
+    "@adonisjs/lucid-slugify",
+    "@adonisjs/mail"
   ],
   "metaFiles": [
     {

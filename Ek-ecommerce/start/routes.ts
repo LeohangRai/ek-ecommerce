@@ -28,6 +28,16 @@ Route.group(() => {
   Route.get('/login', 'AuthController.loginShow').as('loginShow')
   Route.post('/login', 'AuthController.login').as('login').middleware('throttle')
   Route.get('/logout', 'AuthController.logout').as('logout')
+  Route.get('/forgot-password', 'PasswordResetController.forgotPasswordShow').as(
+    'forgotPasswordShow'
+  )
+  Route.post('/forgot-password', 'PasswordResetController.forgotPasswordMail').as(
+    'forgotPasswordMail'
+  )
+  Route.get('/reset-password/:email', 'PasswordResetController.resetPasswordShow').as(
+    'resetPasswordShow'
+  )
+  Route.post('/reset-password/:email', 'PasswordResetController.resetPassword').as('resetPassword')
 })
   .prefix('auth')
   .as('auth')

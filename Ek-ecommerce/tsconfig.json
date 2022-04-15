@@ -36,7 +36,8 @@
       "@adonisjs/bouncer",
       "@adonisjs/redis",
       "adonis-request-throttler",
-      "@adonisjs/lucid-slugify"
+      "@adonisjs/lucid-slugify",
+      "@adonisjs/mail"
     ]
   }
 }

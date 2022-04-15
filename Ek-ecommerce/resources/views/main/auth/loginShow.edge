@@ -14,7 +14,7 @@
                 <form action="{{ route('auth.login')}}" method="POST">
                     {{ csrfField() }}
                     <div class="form-group">
-                        <label for="email">Username or Email</label>
+                        <label for="uid">Username or Email</label>
                         <input type="text" name="uid" placeholder="Username or Email Address" required />
                     </div>
 
@@ -35,6 +35,12 @@
                     Don't have an account yet?
                     <a href="{{ route('auth.signupShow') }}">
                         Sign up here
+                    </a>
+                </div>
+
+                <div class="text-primary" style="margin-top:20px">                    
+                    <a href="{{ route('auth.forgotPasswordShow') }}">
+                        Forgot password?
                     </a>
                 </div>
             </div>
