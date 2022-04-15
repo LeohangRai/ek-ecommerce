@@ -27,7 +27,6 @@ export default class AuthController {
     }
 
     const payload = await request.validate(SignupValidator)
-
     try {
       // roleId:1 because that's the default roleId for new users that signup from main ecommerce site
       const user = await User.create({ ...payload, roleId: 1 })

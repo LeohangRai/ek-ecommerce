@@ -6,21 +6,17 @@ import UpdateRoleValidator from 'App/Validators/UpdateRoleValidator'
 export default class RolesController {
   public async index({ view, bouncer }: HttpContextContract) {
     await bouncer.with('RolePolicy').authorize('viewList')
-
     const roles = await Role.all()
-
     return view.render('dashboard/roles/index', { title: 'Roles', roles })
   }
 
   public async create({ view, bouncer }: HttpContextContract) {
     await bouncer.with('RolePolicy').authorize('create')
-
     return view.render('dashboard/roles/create', { title: 'Create new role' })
   }
 
   public async store({ request, response, bouncer, session }: HttpContextContract) {
     await bouncer.with('RolePolicy').authorize('create')
-
     const payload = await request.validate(CreateRoleValidator)
     try {
       const role = await Role.create(payload)
@@ -43,14 +39,10 @@ export default class RolesController {
 
   public async update({ params, request, response, bouncer, session }: HttpContextContract) {
     await bouncer.with('RolePolicy').authorize('update')
-
     const payload = await request.validate(UpdateRoleValidator)
-
     try {
       const role = await Role.updateOrCreate({ id: params.id }, { ...payload })
-
       session.flash('success', `The role "${role.name}" was updated succesfully.`)
-
       return response.redirect().toRoute('dashboard.roles.index')
     } catch (e) {
       session.flash('error', e.message)
@@ -63,8 +55,6 @@ export default class RolesController {
     try {
       const role = await Role.findOrFail(params.id)
       await role.delete()
-      console.log('Role deleted: ', role)
-
       session.flash('success', `The role "${role.name}" was deleted succesfully.`)
       response.redirect('back')
     } catch (e) {
