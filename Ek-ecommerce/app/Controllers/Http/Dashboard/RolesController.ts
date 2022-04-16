@@ -50,16 +50,18 @@ export default class RolesController {
     }
   }
 
-  public async destroy({ params, response, bouncer, session }: HttpContextContract) {
+  // implement ajax call for this using jQuery
+  public async destroy({ params, response, bouncer }: HttpContextContract) {
     await bouncer.with('RolePolicy').authorize('delete')
     try {
       const role = await Role.findOrFail(params.id)
       await role.delete()
-      session.flash('success', `The role "${role.name}" was deleted succesfully.`)
-      response.redirect('back')
+      return response.status(202).send({ error: false, role })
     } catch (e) {
-      session.flash('error', e.message)
-      response.redirect('back')
+      return response.send({
+        error: true,
+        errorMsg: e.message,
+      })
     }
   }
 }
