@@ -54,16 +54,18 @@ export default class UsersController {
     }
   }
 
-  public async destroy({ params, response, bouncer, session }: HttpContextContract) {
+  // implement ajax call for this using jQuery
+  public async destroy({ params, response, bouncer }: HttpContextContract) {
     await bouncer.with('UserPolicy').authorize('delete')
     try {
       const user = await User.findOrFail(params.id)
       await user.delete()
-      session.flash('success', `The user "${user.username}" was deleted succesfully`)
-      response.redirect('back')
+      return response.status(202).send({ error: false, user })
     } catch (e) {
-      session.flash('error', e.message)
-      response.redirect('back')
+      return response.send({
+        error: true,
+        errorMsg: e.message,
+      })
     }
   }
 }
