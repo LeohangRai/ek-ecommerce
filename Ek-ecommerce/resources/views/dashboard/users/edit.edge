@@ -50,7 +50,9 @@
                     <label for="roleId">Role</label>
                     <select name="roleId" id="roleId" class="form-control">
                         @each(role in roles)
-                        <option value="{{role.id}}">{{role.name}}</option>
+                            <option value="{{role.id}}" {{ role.id === user.roleId ? 'selected':'' }}> 
+                            {{role.name}}
+                            </option>
                         @endeach
                     </select>
                 </div>              
